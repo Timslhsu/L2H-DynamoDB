@@ -1,6 +1,6 @@
 # AWS DynamoDB CLI Template
 
-## Create table
+## Create table and GSI
 
 ```bash
 aws dynamodb create-table --cli-input-json '
@@ -31,6 +31,28 @@ aws dynamodb create-table --cli-input-json '
             "AttributeType": "N"
         }
 
+    ],
+    "GlobalSecondaryIndexes": [
+        {
+            "IndexName": "ts-device-index",
+            "KeySchema": [
+                {
+                    "AttributeName": "ts",
+                    "KeyType": "HASH"
+                },
+                {
+                    "AttributeName": "deviceid",
+                    "KeyType": "RANGE"
+                }
+            ],
+            "Projection": {
+                "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+            }
+        }
     ]
 }
 '
@@ -40,6 +62,51 @@ aws dynamodb create-table --cli-input-json '
 
 ```bash
 aws dynamodb delete-table --table-name events
+```
+
+## Update table - create GSI
+
+```bash
+aws dynamodb update-table --cli-input-json '
+{
+    "TableName": "events",
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "deviceid",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "ts",
+            "AttributeType": "N"
+        }
+
+    ],
+    "GlobalSecondaryIndexUpdates": [
+        {
+            "Create": {
+                "IndexName": "ts-device-index",
+                "KeySchema": [
+                    {
+                        "AttributeName": "ts",
+                        "KeyType": "HASH"
+                    },
+                    {
+                        "AttributeName": "deviceid",
+                        "KeyType": "RANGE"
+                    }
+                ],
+                "Projection": {
+                    "ProjectionType": "ALL"
+                },
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": 1,
+                    "WriteCapacityUnits": 1
+                }
+            }
+        }
+    ]
+}
+'
 ```
 
 ## Put item
