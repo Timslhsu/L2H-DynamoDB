@@ -11,9 +11,9 @@ sudo pip3 install boto3
 wget https://sdk-for-java.amazonwebservices.com/latest/aws-java-sdk.zip
 unzip aws-java-sdk.zip
 mkdir JARS
-cp ~/aws-java-sdk-1.11.670/lib/aws-java-sdk-1.11.670.jar ~/JARS/
-cp ~/aws-java-sdk-1.11.670/third-party/lib/*.jar ~/JARS/
-https://www-eu.apache.org/dist/logging/log4j/1.2.17/log4j-1.2.17.tar.gz
+cp ~/aws-java-sdk-1.11.671/lib/aws-java-sdk-1.11.671.jar ~/JARS/
+cp ~/aws-java-sdk-1.11.671/third-party/lib/*.jar ~/JARS/
+wget https://www-eu.apache.org/dist/logging/log4j/1.2.17/log4j-1.2.17.tar.gz
 tar zxvf log4j-1.2.17.tar.gz
 cp ~/apache-log4j-1.2.17/log4j-1.2.17.jar ~/JARS/
 export CLASSPATH=~/JARS/*:.
